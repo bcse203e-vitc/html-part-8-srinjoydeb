@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter</title>
+</head>
+<body>
+    <h2>Word Counter with Highlighting</h2>
+    <textarea id="textArea" rows="8" cols="50" placeholder="Type something..."></textarea>
+    <p>Word Count: <span id="wordCount">0</span></p>
+    <p>Highlighted Text:</p>
+    <p id="highlightedText"></p>
+
+    <script>
+        document.getElementById("textArea").addEventListener("input", function () {
+            let text = this.value.trim();
+            let words = text.split(/\s+/).filter(word => word.length > 0);
+            
+        
+            document.getElementById("wordCount").innerText = words.length;
+
+           
+            let wordMap = {};
+            words.forEach(word => {
+                wordMap[word] = (wordMap[word] || 0) + 1;
+            });
+
+            let highlighted = words.map(word => 
+                wordMap[word] > 1 ? `<span style="color: red;">${word}</span>` : word
+            ).join(" ");
+
+            document.getElementById("highlightedText").innerHTML = highlighted;
+        });
+    </script>
+</body>
+</html>

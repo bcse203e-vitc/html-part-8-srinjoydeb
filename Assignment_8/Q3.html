@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <style>
+        #carousel {
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+        .slide {
+            min-width: 100%;
+        }
+        button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+        #prev { left: 5px; }
+        #next { right: 5px; }
+    </style>
+</head>
+<body>
+    <div id="carousel" onmouseover="pauseCarousel()" onmouseout="startCarousel()">
+        <div class="slides" id="slides">
+            <img src="https://cdn.theatlantic.com/media/mt/science/cat_caviar.jpg" class="slide">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRD_eNcRsCOWH9gKGtUZhlxA15co6Lz-MmOSA&s" class="slide">
+            <img src="https://shotkit.com/wp-content/uploads/bb-plugin/cache/Earn-money-stock-photography-landscape-a139c4bbc5869f7b8a922beb58370a92-zybravgx2q47.jpg" class="slide">
+        </div>
+        <button id="prev" onclick="prevSlide()">Prev</button>
+        <button id="next" onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+        let index = 0;
+        let interval;
+        const slides = document.getElementById("slides");
+        const totalSlides = document.querySelectorAll(".slide").length;
+
+        function showSlide(i) {
+            index = (i + totalSlides) % totalSlides;
+            slides.style.transform = `translateX(${-index * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(index + 1);
+        }
+
+        function prevSlide() {
+            showSlide(index - 1);
+        }
+
+        function startCarousel() {
+            interval = setInterval(nextSlide, 3000);
+        }
+
+        function pauseCarousel() {
+            clearInterval(interval);
+        }
+
+        startCarousel();
+    </script>
+</body>
+</html>
